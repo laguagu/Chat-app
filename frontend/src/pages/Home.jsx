@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react"
-import messageApi from "../api/messages"
-import MessageItem from "../components/MessageItem";
-
-
+import { useEffect, useState } from "react";
+import messageApi from "../api/messages";
+import MessageList from "../components/MessagList";
+import ChatComponent from "../components/ChatComponent";
+import { Box, TextField, Button } from "@mui/material";
 
 export default function HomeComponent() {
-    const[messages, setMessage] = useState([]);
+  const [messages, setMessage] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await messageApi.fetchMessages();
-            setMessage(data)
-        }
-        fetchData();
-    }, [])
-
-    
-    return (
-        <div>
-          <h1>Messages</h1>
-          {messages.map((message, index) => (
-            <MessageItem key={index} message={message} />
-          ))}
-        </div>
-      );
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await messageApi.fetchMessages();
+      setMessage(data);
     };
-    
+    fetchData();
+  }, []);
+
+  return (
+    <Box>
+      <ChatComponent />
+      <MessageList messages={messages} />
+    </Box>
+  );
+}
