@@ -16,7 +16,6 @@ export default function HomeComponent() {
 
   return (
     <Box>
-      {console.log(messages)}
       <ChatUI messages={messages} setMessage={setMessage}/>
     </Box>
   );

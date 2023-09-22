@@ -11,12 +11,12 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
   },
   {
-    timestamps: true,
+    timestamps: true,versionKey: false
   }
 );
 
 // Lisäät pre-save hookin, joka hashää salasanan ennen sen tallentamista tietokantaan:
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function(next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 8);
   }
@@ -24,12 +24,12 @@ userSchema.pre("save", async function (next) {
 });
 
 // Lisätään metodi salasanan tarkistamiseen:
-userSchema.methods.authenticate = async function (password) {
+userSchema.methods.authenticate = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
 
 // Lisätään metodi JWT-tokenin generointiin
-userSchema.methods.generateJWT = function () {
+userSchema.methods.generateJWT = function() {
   const today = new Date();
   const expirationDate = new Date(today);
   expirationDate.setDate(today.getDate() + 60);
@@ -44,4 +44,6 @@ userSchema.methods.generateJWT = function () {
   );
 };
 
-export default mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+export default User;
