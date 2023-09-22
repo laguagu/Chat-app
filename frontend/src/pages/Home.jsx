@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import messageApi from "../api/messages";
-import MessageList from "../components/MessagList";
-import ChatComponent from "../components/ChatComponent";
-import { Box, TextField, Button } from "@mui/material";
+import { Box } from "@mui/material";
+import ChatUI from "../components/ChatUI";
 
 export default function HomeComponent() {
   const [messages, setMessage] = useState([]);
@@ -17,8 +16,8 @@ export default function HomeComponent() {
 
   return (
     <Box>
-      <ChatComponent />
-      <MessageList messages={messages} />
+      {console.log(messages)}
+      <ChatUI messages={messages} setMessage={setMessage}/>
     </Box>
   );
 }
