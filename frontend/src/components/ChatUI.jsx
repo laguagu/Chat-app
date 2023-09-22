@@ -9,15 +9,27 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
+import sendMessage from "../api/sendMessage";
 
 const ChatUI = ({messages, setMessage }) => {
   const [input, setInput] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim() !== "") {
       console.log(input);
       console.log(messages)
-      setMessage([...messages, { text: input, sender: 'user', _id: new Date().toISOString() }]);
+      const newMessage = {
+        text: input,
+        sender: "SenderId",
+        receiver: "ReceiverId"
+      };
+      
+      const sentMessage = await sendMessage(newMessage);
+
+      if (sentMessage && sentMessage._id) {
+        setMessage([...messages, sentMessage]);
+      }
+      
       setInput("");
     }
   };
