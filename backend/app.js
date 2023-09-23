@@ -4,7 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import messageRouter from "./routes/messageRoutes.js";
-import userRouter from "./routes/userRoutes.js"
+import userRouter from "./routes/userRoutes.js";
 dotenv.config();
 
 // Fake käyttäjä testaukseen

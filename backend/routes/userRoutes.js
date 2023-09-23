@@ -6,4 +6,5 @@ const router = Express.Router()
 
 router.post("/register", createUser)
 
+
 export default router
