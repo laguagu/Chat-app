@@ -6,13 +6,15 @@ import {
   Routes,
   BrowserRouter
 } from "react-router-dom";
+import SignIn from "./pages/SigIn";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeComponent/>}/>
-        <Route path="Login" element={<Login/>}/>
+        <Route path="login" element={<SignIn/>}/>
+        <Route path="test" element={<Login/>}/>
       </Routes>
     </BrowserRouter>
   );
