@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 function Navbar() {
   return (
     <AppBar position="static">
+      <h1>KAVERI LISTA TULOSSA</h1>
       <Toolbar>
         <Typography variant="h6">
           ChatApp

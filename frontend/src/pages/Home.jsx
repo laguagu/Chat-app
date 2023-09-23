@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import messageApi from "../api/messages";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ChatUI from "../components/ChatUI";
+import NavBar from "../components/Navbar"
 
 export default function HomeComponent() {
   const [messages, setMessage] = useState([]);
@@ -16,7 +17,18 @@ export default function HomeComponent() {
 
   return (
     <Box>
-      <ChatUI messages={messages} setMessage={setMessage}/>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <Box sx={{ flex: 1, flexDirection: "column" }}>
+            <NavBar />
+          </Box>
+        </Grid>
+        <Grid item xs={9}>
+          <Box sx={{ flexGrow: 1 }}>
+            <ChatUI messages={messages} setMessage={setMessage} />
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
