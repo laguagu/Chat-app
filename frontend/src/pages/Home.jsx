@@ -5,15 +5,6 @@ import ChatUI from "../components/ChatUI";
 import NavBar from "../components/Navbar"
 
 export default function HomeComponent() {
-  const [messages, setMessage] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await messageApi.fetchMessages();
-      setMessage(data);
-    };
-    fetchData();
-  }, []);
 
   return (
     <Box>
@@ -25,7 +16,7 @@ export default function HomeComponent() {
         </Grid>
         <Grid item xs={9}>
           <Box sx={{ flexGrow: 1 }}>
-            <ChatUI messages={messages} setMessage={setMessage} />
+            <ChatUI/>
           </Box>
         </Grid>
       </Grid>

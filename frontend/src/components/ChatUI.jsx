@@ -8,11 +8,21 @@ import {
   Paper,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import sendMessage from "../api/sendMessage";
+import messageApi from "../api/messages";
 
-const ChatUI = ({messages, setMessage }) => {
+const ChatUI = () => {
+  const [messages, setMessage] = useState([]);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await messageApi.fetchMessages();
+      setMessage(data);
+    };
+    fetchData();
+  }, []);
 
   const handleSend = async () => {
     if (input.trim() !== "") {
