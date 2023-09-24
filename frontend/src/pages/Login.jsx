@@ -58,7 +58,7 @@ export default function SignIn() {
       localStorage.setItem('userToken', response.token)
       navigate('/');
     } catch (error) {
-      console.error("Failed to login", erorr);
+      console.error("Failed to login", error);
     }
   };
 

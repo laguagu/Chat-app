@@ -29,7 +29,7 @@ app.use(Express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
-app.use(authenticateJWT)
+
 app.use("/api/messages", messageRouter);
 app.use("/api/users", userRouter);
 
