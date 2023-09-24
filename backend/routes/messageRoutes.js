@@ -8,7 +8,7 @@ const router = Express.Router()
 
 router.get("/",authenticateJWT, getMessages)
 router.post('/',authenticateJWT, createMessage);
-router.get("/:id",authenticateJWT, getMessageById)
+router.get("/:id", getMessageById) // Lisää tähänkin myöhemmin auth
 router.delete("/",authenticateJWT, deleteMessages)
 
 export default router;

@@ -8,20 +8,13 @@ import userRouter from "./routes/userRoutes.js";
 import { authenticateJWT } from "./middleware/jwtAuth.js";
 dotenv.config();
 
-// Fake käyttäjä testaukseen
-// const dummyUser = {
-//   id: "123",
-//   username: "JohnDoe",
-//   email: "john@example.com",
-// };
-
 const PORT = process.env.PORT || 3000;
 const app = Express();
 
-// app.use((req, res, next) => {
-//     req.user = dummyUser;
-//     next();
+// morgan.token('headers', function (req, res) {
+//   return JSON.stringify(req.headers.authorization);
 // });
+// :res[content-legth] :headers
 
 connectDB();
 app.use(cors());
