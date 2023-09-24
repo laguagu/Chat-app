@@ -5,6 +5,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import messageRouter from "./routes/messageRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import { authenticateJWT } from "./middleware/jwtAuth.js";
 dotenv.config();
 
 // Fake käyttäjä testaukseen
@@ -28,7 +29,7 @@ app.use(Express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
-
+app.use(authenticateJWT)
 app.use("/api/messages", messageRouter);
 app.use("/api/users", userRouter);
 

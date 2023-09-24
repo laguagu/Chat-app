@@ -15,7 +15,7 @@ import messageApi from "../api/messages";
 const ChatUI = () => {
   const [messages, setMessage] = useState([]);
   const [input, setInput] = useState("");
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const data = await messageApi.fetchMessages();
@@ -93,7 +93,6 @@ const ChatUI = () => {
 
 const Message = ({ message }) => {
   const isUser = message.sender === "user"; // Etsi tässä käyttäjä
-
   return (
     <Box
       sx={{
