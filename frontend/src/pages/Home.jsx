@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import messageApi from "../api/messages";
 import { Box, Grid } from "@mui/material";
 import ChatUI from "../components/ChatUI";
 import NavBar from "../components/Navbar"

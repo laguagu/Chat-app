@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
-import sendMessage from "../api/sendMessage";
 import messageApi from "../api/messages";
+import jwt_decode from "jwt-decode";
 
 const ChatUI = () => {
   const [messages, setMessage] = useState([]);
   const [input, setInput] = useState("");
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await messageApi.fetchMessages();
@@ -27,19 +27,19 @@ const ChatUI = () => {
   const handleSend = async () => {
     if (input.trim() !== "") {
       console.log(input);
-      console.log(messages)
+      console.log(messages);
       const newMessage = {
         text: input,
-        sender: "SenderId",
-        receiver: "ReceiverId"
+        sender: "SenderId", // Määritä tähän tämänhetkisen käyttäjän ID
+        receiver: "ReceiverId",
       };
-      
-      const sentMessage = await sendMessage(newMessage);
+
+      const sentMessage = await messageApi.sendMessage(newMessage);
 
       if (sentMessage && sentMessage._id) {
         setMessage([...messages, sentMessage]);
       }
-      
+
       setInput("");
     }
   };
@@ -92,7 +92,12 @@ const ChatUI = () => {
 };
 
 const Message = ({ message }) => {
-  const isUser = message.sender === "user"; // Etsi tässä käyttäjä
+  const token = localStorage.getItem("userToken");
+  const decodedToken  = jwt_decode(token);
+  const currentUserId = decodedToken.id; 
+
+  const isUser = message.sender === currentUserId; 
+  console.log("Viestin lähettäjä ID: ",currentUserId, "Viestin ID:", message._id)
   return (
     <Box
       sx={{

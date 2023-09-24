@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import loginUser from "../api/login";
+import loginUser from "../api/loginApi";
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
@@ -37,7 +37,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function LogIn() {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
