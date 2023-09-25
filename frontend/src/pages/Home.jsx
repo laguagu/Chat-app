@@ -10,12 +10,12 @@ export default function HomeComponent() {
       <SimpleAppBar/>
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <Box sx={{ flex: 1, flexDirection: "column" }}>
+          <Box>
             <NavBar />
           </Box>
         </Grid>
         <Grid item xs={9}>
-          <Box sx={{ flexGrow: 1 }}>
+          <Box>
             <ChatUI/>
           </Box>
         </Grid>
