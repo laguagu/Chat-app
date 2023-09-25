@@ -7,10 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
 
 export default function SimpleAppBar() {
   const [auth, setAuth] = useState(false);
   const [profileImage, setProfileImage] = useState(AccountCircle)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("userToken")
@@ -24,6 +26,7 @@ export default function SimpleAppBar() {
     localStorage.removeItem('userToken');
     console.log("User has logged out");
     setAuth(false);
+    navigate("/login")
   };
 
   return (

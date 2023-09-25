@@ -11,20 +11,41 @@ import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
 import messageApi from "../api/messages";
 import jwt_decode from "jwt-decode";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const ChatUI = () => {
   const [messages, setMessage] = useState([]);
   const [input, setInput] = useState("");
-  const token = localStorage.getItem("userToken");
-  const decodedToken  = jwt_decode(token);
-  const currentUserId = decodedToken.id; 
+  const [decodedToken, setDecodeToken] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await messageApi.fetchMessages();
-      setMessage(data);
-    };
-    fetchData();
+    const token = localStorage.getItem("userToken");
+
+    if (!token) {
+      // Ohjataan takaisin /login sivulle jos token puuttuu
+      console.error("No token found");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const decoded = jwt_decode(token);
+      setDecodeToken(decoded);
+      setUserEmail(decoded.email);
+      // Jos tässä vaiheessa ei ole virheitä token on kelvollinen
+
+      const fetchData = async () => {
+        const data = await messageApi.fetchMessages();
+        setMessage(data);
+      };
+
+      fetchData();
+    } catch (error) {
+      console.error("Invalid token", error);
+      navigate("/login");
+    }
   }, []);
 
   const handleSend = async () => {
@@ -33,7 +54,7 @@ const ChatUI = () => {
       console.log(messages);
       const newMessage = {
         text: input,
-        sender: decodedToken.email, // Määritä tähän tämänhetkisen käyttäjän email
+        sender: decodedToken.email,
         receiver: "ReceiverId",
       };
 
@@ -62,7 +83,7 @@ const ChatUI = () => {
     >
       <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
         {messages.map((message) => (
-          <Message key={message._id} message={message} decodedToken={decodedToken}/>
+          <Message key={message._id} message={message} userEmail={userEmail} />
         ))}
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
@@ -94,9 +115,11 @@ const ChatUI = () => {
   );
 };
 
-const Message = ({ message,decodedToken }) => {
-  const userEmail = decodedToken.email
-  const isUser = message.sender === userEmail; 
+const Message = ({ message, userEmail }) => {
+  if (!userEmail) {
+    return null; // Palauttaa null, jos decodedToken on vielä alustamaton.
+  }
+  const isUser = message.sender === userEmail;
   return (
     <Box
       sx={{
