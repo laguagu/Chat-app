@@ -51,6 +51,7 @@ export default function LogIn() {
       email: data.get("email"),
       password: data.get("password"),
     };
+
     try {
       const response = await loginUser(userDetails);
       console.log("Loggen in:", response);
