@@ -15,6 +15,9 @@ import jwt_decode from "jwt-decode";
 const ChatUI = () => {
   const [messages, setMessage] = useState([]);
   const [input, setInput] = useState("");
+  const token = localStorage.getItem("userToken");
+  const decodedToken  = jwt_decode(token);
+  const currentUserId = decodedToken.id; 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +33,7 @@ const ChatUI = () => {
       console.log(messages);
       const newMessage = {
         text: input,
-        sender: "SenderId", // Määritä tähän tämänhetkisen käyttäjän ID
+        sender: decodedToken.email, // Määritä tähän tämänhetkisen käyttäjän email
         receiver: "ReceiverId",
       };
 
@@ -59,7 +62,7 @@ const ChatUI = () => {
     >
       <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
         {messages.map((message) => (
-          <Message key={message._id} message={message} />
+          <Message key={message._id} message={message} decodedToken={decodedToken}/>
         ))}
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
@@ -91,13 +94,9 @@ const ChatUI = () => {
   );
 };
 
-const Message = ({ message }) => {
-  const token = localStorage.getItem("userToken");
-  const decodedToken  = jwt_decode(token);
-  const currentUserId = decodedToken.id; 
-
-  const isUser = message.sender === currentUserId; 
-  console.log("Viestin lähettäjä ID: ",currentUserId, "Viestin ID:", message._id)
+const Message = ({ message,decodedToken }) => {
+  const userEmail = decodedToken.email
+  const isUser = message.sender === userEmail; 
   return (
     <Box
       sx={{
