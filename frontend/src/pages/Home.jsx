@@ -8,10 +8,11 @@ export default function HomeComponent() {
   return (
     <Box>
       <SimpleAppBar/>
-      <Grid container spacing={2}>
+      {/* Spacing lisää elementtien paddingia */}
+      <Grid container spacing={0}> 
         <Grid item xs={3}>
           <Box>
-            <NavBar />
+            <NavBar/>
           </Box>
         </Grid>
         <Grid item xs={9}>
