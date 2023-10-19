@@ -1,1 +1,2 @@
-Chat app project
+Chat app project.
+Still in progress.
